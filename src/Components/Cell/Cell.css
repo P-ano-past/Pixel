@@ -1,0 +1,15 @@
+.cellRow {
+    justify-content: center;
+      border: 1px black solid;
+      display: grid !important;
+      grid-template-columns:  repeat(80, 10px);
+      /* gap: 1px; */
+
+    }
+
+    .cell {
+      border: 1px rgb(189, 189, 189) solid;
+      padding: 1px;
+      height: 10px;
+      width: 10px;
+    }
