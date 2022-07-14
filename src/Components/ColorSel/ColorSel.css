@@ -1,4 +1,6 @@
-
+.cellSelect:hover {
+  background-color: yellow;
+}
 
 .colorPick {
   padding: 10px;

@@ -8,11 +8,12 @@ export default function Cell() {
   const cellArr = [];
   const colorValue = useContext(ColorPickContext);
 
-  console.log("colorValue Cell.js: ", colorValue);
+  // console.log("colorValue Cell.js: ", colorValue);
 
   const colorPick = (e) => {
     setIsActive((current) => !current);
-    e.target.style.backgroundColor = "black";
+    // console.log("cell colorValue", colorValue.color);
+    e.target.style.backgroundColor = colorValue.color;
   };
 
   for (let i = 0; i < 5000; i++) {

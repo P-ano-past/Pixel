@@ -22,7 +22,8 @@ export default function ColorSel() {
   const colorPick = (e) => {
     // console.log("className", e.target.className);
     setPickedColor(e.target.classList[1]);
-    console.log("pickedColor", pickedColor);
+    // console.log("pickedColor", pickedColor);
+    colorValue.color = pickedColor;
   };
 
   for (let i = 0; i < cellColors.length; i++) {
