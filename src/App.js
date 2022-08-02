@@ -7,11 +7,6 @@ import ColorSel from "./Components/ColorSel/ColorSel";
 import { ColorPickContext } from "./Utils/ColorPickContext/ColorPickContext";
 
 function App() {
-  // const [colorPick, setColorPick] = useState();
-  // setColorPick("black");
-
-  console.log("ColorPickContext", ColorPickContext);
-
   return (
     <Container className="App">
       <ColorPickContext.Provider value={ColorPickContext._currentValue.color}>

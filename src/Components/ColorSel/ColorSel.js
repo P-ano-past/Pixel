@@ -1,12 +1,18 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./ColorSel.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 
 export default function ColorSel() {
+  // const [isActive, setIsActive] = useState(false);
   const [pickedColor, setPickedColor] = useState();
   const colorValue = useContext(ColorPickContext);
-  console.log("colorValue: ", colorValue.color);
+
+  useEffect(() => {
+    setColorContext(pickedColor);
+  });
+
+  // console.log("colorValue: ", colorValue.color);
 
   const cellColors = [
     "#000000",
@@ -20,9 +26,11 @@ export default function ColorSel() {
   const cellColorArr = [];
 
   const colorPick = (e) => {
-    // console.log("className", e.target.className);
     setPickedColor(e.target.classList[1]);
-    // console.log("pickedColor", pickedColor);
+    setColorContext();
+  };
+
+  const setColorContext = (e) => {
     colorValue.color = pickedColor;
   };
 

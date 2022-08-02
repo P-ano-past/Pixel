@@ -1,5 +1,13 @@
 .cellSelect:hover {
-  background-color: yellow;
+  border: 3px solid black;
+}
+
+.cellSelect:focus {
+  border: 3px solid black;
+}
+
+.cellSelect:active {
+  border: 3px solid black;
 }
 
 .colorPick {

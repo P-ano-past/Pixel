@@ -2,7 +2,7 @@
     justify-content: center;
       border: 1px black solid;
       display: grid !important;
-      grid-template-columns:  repeat(80, 10px);
+      grid-template-columns:  repeat(100, 10px);
       /* gap: 1px; */
 
     }
