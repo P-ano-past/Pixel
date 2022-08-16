@@ -11,4 +11,9 @@ beginning the process for the grid.
 
 7/14 constructed grid, formatted css for grid, implemented color select panel, implemented selectable color
 
--- need to figure out timing for the color select, need to start planning on discord roles.
+8/2 changed context and state handling to address timing for color select and cell selection.
+
+## ToDo:
+
+-- need to start planning on discord roles.
+---- Discord should be able to handle the following: Show user's username when hovering over cell, the user should see a display at the bottom of the grid OR the color select section that shows a countdown. if countdown is showing, colors should be displayed as disabled.
