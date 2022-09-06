@@ -1,33 +1,18 @@
 import "./App.css";
-import { React, useState, useContext } from "react";
+import { React } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col } from "react-bootstrap";
-import Grid from "./Components/Grid/Grid";
-import ColorSel from "./Components/ColorSel/ColorSel";
-import { ColorPickContext } from "./Utils/ColorPickContext/ColorPickContext";
+import { Container } from "react-bootstrap";
+import Main from "./Components/Main/Main";
+import Login from "./Components/LoginButton/Login";
 
 function App() {
   return (
     <Container className="App">
-      <ColorPickContext.Provider value={ColorPickContext._currentValue.color}>
-        <Container>
-          <Row>
-            <Col id="appTitle">
-              <h1>
-                <p className="pixel">Pixel</p>
-              </h1>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <ColorSel />
-            </Col>
-          </Row>
-        </Container>
-        <Container>
-          <Grid />
-        </Container>
-      </ColorPickContext.Provider>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/auth/redirect" element={<Main />} />
+      </Routes>
     </Container>
   );
 }

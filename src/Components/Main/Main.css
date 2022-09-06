@@ -1,0 +1,18 @@
+
+.tray {
+    border: 3px solid green;
+    border-radius: 10px;
+    background-color: rgb(223, 223, 223);
+  }
+
+  #appTitle {
+    border: 1px solid blue;
+
+  }
+
+  .pixel {
+    font-size: 50px;
+    border: 1px solid red;
+    justify-content: center;
+    align-items: center;
+  }
