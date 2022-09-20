@@ -20,10 +20,10 @@ export default function Main() {
     params.append("scope", "identify email");
 
     var data = qs.stringify({
-      client_id: "1012104656433979433",
-      client_secret: "JNQeg3Gpsi90gwNCC7nhHRFsbYvauwNb",
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      client_secret: process.env.REACT_APP_CLIENT_SECRET,
       code: codeValue,
-      redirect_uri: "http://localhost:3001/auth/redirect",
+      redirect_uri: process.env.REACT_APP_CLIENT_REDIRECT,
       grant_type: "authorization_code",
     });
     var config = {
