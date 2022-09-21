@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ColorSel from "../ColorSel/ColorSel";
 import Grid from "../Grid/Grid";
@@ -7,9 +7,16 @@ import axios from "axios";
 var qs = require("qs");
 
 export default function Main() {
+  const [setUserName, userName] = useState("");
+
   useEffect(() => {
     getInfo();
+    displayName();
   }, []);
+
+  const displayName = () => {
+    console.log("username", userName);
+  };
 
   const getInfo = () => {
     const queryString = window.location.search;
@@ -46,8 +53,8 @@ export default function Main() {
           url: "https://discord.com/api/users/@me",
           headers: {
             Authorization: `Bearer ${response.data.access_token}`,
-            // Cookie:
-            //   "__dcfduid=584b781e32e011edb6f4aa924745bf25; __sdcfduid=584b781e32e011edb6f4aa924745bf25f66a6891db401d468350f95b613e93be417523e6ca8a1c8d589f9ce91608f6c3",
+            Cookie:
+              "__dcfduid=584b781e32e011edb6f4aa924745bf25; __sdcfduid=584b781e32e011edb6f4aa924745bf25f66a6891db401d468350f95b613e93be417523e6ca8a1c8d589f9ce91608f6c3",
           },
           data: data,
         };
@@ -77,7 +84,9 @@ export default function Main() {
                 <p className="pixel">Pixel</p>
                 <div
                   id="info"
-                  onClick={console.log("this used to be a button")}
+                  onClick={
+                    (console.log("this used to be a button"), displayName())
+                  }
                 >
                   Hoi!
                 </div>
