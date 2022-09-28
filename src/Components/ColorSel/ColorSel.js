@@ -23,6 +23,7 @@ export default function ColorSel() {
     "orange",
     "purple",
   ];
+
   const cellColorArr = [];
 
   const colorPick = (e) => {

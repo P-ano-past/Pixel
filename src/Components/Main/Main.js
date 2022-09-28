@@ -1,21 +1,41 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ColorSel from "../ColorSel/ColorSel";
 import Grid from "../Grid/Grid";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 import axios from "axios";
+import UserInfo from "../UserInfo/UserInfo";
+import { userContext } from "../../Utils/UserContext/UserContext";
 var qs = require("qs");
 
 export default function Main() {
-  const [setUserName, userName] = useState("");
+  const [userName, setUserName] = useState("");
+  const userInfo = useContext(userContext);
+  // const [accentColor, setAccent_color] = useState("");
+  // const [avatar, setAvatar] = useState("");
+  // const [avatarDecor, setAvatarDecor] = useState("");
+  // const [banner, setBanner] = useState("");
+  // const [bannerColor, setBannerCol] = useState("");
+  // const [discriminator, setDiscriminator] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [flags, setFlags] = useState("");
+  // const [id, setId] = useState("");
+  // const [discLocale, setdiscLocale] = useState("");
+  // const [mfa_enabled, setMfa_enabled] = useState("");
+  // const [public_flags, setPublicFlags] = useState("");
+  // const [verified, setVerified] = useState("");
+  const [profileState, setProfileState] = useState("");
 
   useEffect(() => {
     getInfo();
-    displayName();
   }, []);
 
-  const displayName = () => {
-    console.log("username", userName);
+  useEffect(() => {
+    userInformationContext(profileState);
+  });
+
+  const userInformationContext = (e) => {
+    userInfo.user = profileState;
   };
 
   const getInfo = () => {
@@ -44,9 +64,7 @@ export default function Main() {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        console.log("response", response);
-        console.log("response.data", response.data);
+        // console.log(JSON.stringify(response.data));
         var data = qs.stringify({});
         var config = {
           method: "get",
@@ -61,13 +79,32 @@ export default function Main() {
 
         axios(config)
           .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            console.log("response.data: ", response.data);
+            setProfileState(response.data);
           })
+          // .then(function (response) {
+          //   console.log("response.data: ", response.data);
+          //   // setProfileState(response.data);
+          //   setAccent_color(response.data.accentColor);
+          //   setAvatar(response.data.avatar);
+          //   setAvatarDecor(response.data.avatar_decoration);
+          //   setBanner(response.data.banner);
+          //   setBannerCol(response.data.banner_color);
+          //   setDiscriminator(response.data.discriminator);
+          //   setEmail(response.data.email);
+          //   setFlags(response.data.flags);
+          //   setId(response.data.id);
+          //   setdiscLocale(response.data.locale);
+          //   setMfa_enabled(response.data.mfa_enabled);
+          //   setPublicFlags(response.data.public_flags);
+          //   setUserName(response.data.username);
+          //   setVerified(response.data.verified);
+          //   console.log("proifasdfaw", profileState);
+          // })
           .catch(function (error) {
             console.log(error);
           });
-        //response.data.access_token is the id for users logging in.
-        //refresh token is something else i don't fully undrestand yet.
+        //response items should all be in state. I should probably move this to a context object and utilize local keys.
       })
       .catch(function (error) {
         console.log(error);
@@ -84,12 +121,13 @@ export default function Main() {
                 <p className="pixel">Pixel</p>
                 <div
                   id="info"
-                  onClick={
-                    (console.log("this used to be a button"), displayName())
-                  }
+                  onClick={(e) => {
+                    console.log("username", userName);
+                  }}
                 >
                   Hoi!
                 </div>
+                <UserInfo />
               </h1>
             </Col>
           </Row>
