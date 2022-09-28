@@ -11,19 +11,6 @@ var qs = require("qs");
 export default function Main() {
   const [userName, setUserName] = useState("");
   const userInfo = useContext(userContext);
-  // const [accentColor, setAccent_color] = useState("");
-  // const [avatar, setAvatar] = useState("");
-  // const [avatarDecor, setAvatarDecor] = useState("");
-  // const [banner, setBanner] = useState("");
-  // const [bannerColor, setBannerCol] = useState("");
-  // const [discriminator, setDiscriminator] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [flags, setFlags] = useState("");
-  // const [id, setId] = useState("");
-  // const [discLocale, setdiscLocale] = useState("");
-  // const [mfa_enabled, setMfa_enabled] = useState("");
-  // const [public_flags, setPublicFlags] = useState("");
-  // const [verified, setVerified] = useState("");
   const [profileState, setProfileState] = useState("");
 
   useEffect(() => {
@@ -81,30 +68,11 @@ export default function Main() {
           .then(function (response) {
             console.log("response.data: ", response.data);
             setProfileState(response.data);
+            setUserName(response.data.username);
           })
-          // .then(function (response) {
-          //   console.log("response.data: ", response.data);
-          //   // setProfileState(response.data);
-          //   setAccent_color(response.data.accentColor);
-          //   setAvatar(response.data.avatar);
-          //   setAvatarDecor(response.data.avatar_decoration);
-          //   setBanner(response.data.banner);
-          //   setBannerCol(response.data.banner_color);
-          //   setDiscriminator(response.data.discriminator);
-          //   setEmail(response.data.email);
-          //   setFlags(response.data.flags);
-          //   setId(response.data.id);
-          //   setdiscLocale(response.data.locale);
-          //   setMfa_enabled(response.data.mfa_enabled);
-          //   setPublicFlags(response.data.public_flags);
-          //   setUserName(response.data.username);
-          //   setVerified(response.data.verified);
-          //   console.log("proifasdfaw", profileState);
-          // })
           .catch(function (error) {
             console.log(error);
           });
-        //response items should all be in state. I should probably move this to a context object and utilize local keys.
       })
       .catch(function (error) {
         console.log(error);
@@ -117,18 +85,26 @@ export default function Main() {
         <Container className="tray">
           <Row>
             <Col id="appTitle">
-              <h1>
-                <p className="pixel">Pixel</p>
-                <div
-                  id="info"
-                  onClick={(e) => {
-                    console.log("username", userName);
-                  }}
-                >
-                  Hoi!
-                </div>
-                <UserInfo />
-              </h1>
+              <Col>
+                <p>
+                  <h1>
+                    <p className="pixel">Pixel</p>
+                  </h1>
+                </p>
+              </Col>
+              <Col>
+                <p>
+                  <div
+                    id="info"
+                    onClick={(e) => {
+                      console.log("username", userName);
+                    }}
+                  >
+                    <h4>Hello {userName}!</h4>
+                  </div>
+                </p>
+              </Col>
+              <UserInfo />
             </Col>
           </Row>
           <Row>
