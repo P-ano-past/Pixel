@@ -6,6 +6,8 @@ import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext"
 import axios from "axios";
 import UserInfo from "../UserInfo/UserInfo";
 import { userContext } from "../../Utils/UserContext/UserContext";
+import "./Main.css";
+import Greeting from "../Greeting/Greeting";
 var qs = require("qs");
 
 export default function Main() {
@@ -92,7 +94,7 @@ export default function Main() {
                   </h1>
                 </p>
               </Col>
-              <Col>
+              <Col className="UName">
                 <p>
                   <div
                     id="info"
@@ -100,7 +102,9 @@ export default function Main() {
                       console.log("username", userName);
                     }}
                   >
-                    <h4>Hello {userName}!</h4>
+                    <h4>
+                      <Greeting /> {userName}!
+                    </h4>
                   </div>
                 </p>
               </Col>
