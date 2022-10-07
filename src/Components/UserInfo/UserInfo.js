@@ -1,9 +1,9 @@
 import { React, useContext } from "react";
 import { Button, Col, Row, Container } from "react-bootstrap";
-import { userContext } from "../../Utils/UserContext/UserContext";
+import { UserContext } from "../../Utils/UserContext/UserContext";
 
 export default function UserInfo() {
-  const userInfo = useContext(userContext);
+  const userInfo = useContext(UserContext);
   return (
     <Container>
       <Row>
@@ -12,7 +12,9 @@ export default function UserInfo() {
             onClick={(e) => {
               console.log("log context", userInfo);
             }}
-          />
+          >
+            UserInfo
+          </Button>
         </Col>
       </Row>
     </Container>

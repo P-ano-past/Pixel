@@ -1,7 +1,7 @@
 import React from "react";
 
 const userVal = {
-  user: { user: {} },
+  userProf: { user: "" },
 };
 
-export const userContext = React.createContext(userVal);
+export const UserContext = React.createContext(userVal);

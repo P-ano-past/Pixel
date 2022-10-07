@@ -3,29 +3,27 @@ import { Container, Row, Col } from "react-bootstrap";
 import ColorSel from "../ColorSel/ColorSel";
 import Grid from "../Grid/Grid";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
+import { UserContext } from "../../Utils/UserContext/UserContext";
 import axios from "axios";
 import UserInfo from "../UserInfo/UserInfo";
-import { userContext } from "../../Utils/UserContext/UserContext";
 import "./Main.css";
 import Greeting from "../Greeting/Greeting";
 var qs = require("qs");
 
 export default function Main() {
   const [userName, setUserName] = useState("");
-  const userInfo = useContext(userContext);
+  const userInfo = useContext(UserContext);
   const [profileState, setProfileState] = useState("");
 
   useEffect(() => {
     getInfo();
+    // console.log("userInfo", userInfo);
   }, []);
 
   useEffect(() => {
-    userInformationContext(profileState);
+    // console.log("profileState", profileState);
+    userInfo.userProf = profileState;
   });
-
-  const userInformationContext = (e) => {
-    userInfo.user = profileState;
-  };
 
   const getInfo = () => {
     const queryString = window.location.search;
@@ -68,7 +66,7 @@ export default function Main() {
 
         axios(config)
           .then(function (response) {
-            console.log("response.data: ", response.data);
+            // console.log("response.data: ", response.data);
             setProfileState(response.data);
             setUserName(response.data.username);
           })
@@ -84,42 +82,39 @@ export default function Main() {
   return (
     <Container>
       <ColorPickContext.Provider value={ColorPickContext._currentValue.color}>
-        <Container className="tray">
-          <Row>
-            <Col id="appTitle">
+        <UserContext.Provider value={UserContext._currentValue}>
+          <Container className="tray">
+            <Row>
+              <Col id="appTitle">
+                <Col>
+                  <p>
+                    <h1>
+                      <p className="pixel">Pixel</p>
+                    </h1>
+                  </p>
+                </Col>
+                <Col className="UName">
+                  <p>
+                    <div id="info">
+                      <h4>
+                        <Greeting />
+                      </h4>
+                    </div>
+                  </p>
+                </Col>
+                <UserInfo />
+              </Col>
+            </Row>
+            <Row>
               <Col>
-                <p>
-                  <h1>
-                    <p className="pixel">Pixel</p>
-                  </h1>
-                </p>
+                <ColorSel />
               </Col>
-              <Col className="UName">
-                <p>
-                  <div
-                    id="info"
-                    onClick={(e) => {
-                      console.log("username", userName);
-                    }}
-                  >
-                    <h4>
-                      <Greeting /> {userName}!
-                    </h4>
-                  </div>
-                </p>
-              </Col>
-              <UserInfo />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <ColorSel />
-            </Col>
-          </Row>
-          <Container>
-            <Grid />
+            </Row>
+            <Container>
+              <Grid />
+            </Container>
           </Container>
-        </Container>
+        </UserContext.Provider>
       </ColorPickContext.Provider>
     </Container>
   );
