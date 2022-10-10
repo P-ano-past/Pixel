@@ -4,12 +4,7 @@ import { UserContext } from "../../Utils/UserContext/UserContext";
 
 export default function Greeting() {
   const [greetingPhrase, setGreetingPhrase] = useState("");
-  const [UNC, setUNC] = useState("");
-  const [userNameGet, setUserNameGet] = useState("");
   const profile = useContext(UserContext);
-
-  // console.log("profile", profile);
-  // console.log("UserContext", UserContext);
 
   const phrases = [
     "Hello",
@@ -28,7 +23,6 @@ export default function Greeting() {
   useEffect(() => {
     const random = Math.floor(Math.random() * phrases.length);
     setGreetingPhrase(phrases[random]);
-    setUNC(profile);
   });
 
   return (

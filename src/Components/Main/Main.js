@@ -8,6 +8,7 @@ import axios from "axios";
 import UserInfo from "../UserInfo/UserInfo";
 import "./Main.css";
 import Greeting from "../Greeting/Greeting";
+import UserModal from "../UserModal/UserModal";
 var qs = require("qs");
 
 export default function Main() {
@@ -101,6 +102,7 @@ export default function Main() {
                       </h4>
                     </div>
                   </p>
+                  <UserModal />
                 </Col>
                 <UserInfo />
               </Col>
