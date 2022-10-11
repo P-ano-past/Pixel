@@ -1,6 +1,7 @@
 import { React, useContext } from "react";
 import "./Cell.css";
 import { Row, Col } from "react-bootstrap";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 
 export default function Cell() {

@@ -1,32 +1,53 @@
 import { React, useContext, useState, useEffect } from "react";
-import { Col, Row, Container } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Container,
+  Modal,
+  ModalBody,
+  ModalDialog,
+  ModalHeader,
+} from "react-bootstrap";
 import { UserContext } from "../../Utils/UserContext/UserContext";
 
 export default function UserModal() {
-  //   const [profile, setProfile] = useState();
+  const [profContext, setProfContext] = useState("");
+  const [usernameUE, setUsername] = useState("");
   const profile = useContext(UserContext);
 
   useEffect(() => {
-    console.log("profile", profile);
-  }, []);
+    nameGetter();
+  });
 
-  //   console.log(userInfo.userProf);
+  const nameGetter = () => {
+    setProfContext(profile);
+    setUsername(profile.userProf.username);
+  };
 
   return (
-    <Container>
-      <Row>
-        <Col
-          onClick={() => {
-            console.log("username", profile.userProf.username);
-          }}
-        >
-          This is the Modal
-        </Col>
-        <Col>
-          {profile.userProf.username}#{profile.userProf.discriminator}
-        </Col>
-        {/* <Col>{userProf}</Col> */}
-      </Row>
-    </Container>
+    <Modal>
+      <Container>
+        <Row>
+          <Col
+            onClick={() => {
+              console.log(
+                "profileInfo.userProf.username",
+                profContext.userProf.username
+              );
+              console.log("username", usernameUE);
+            }}
+          >
+            This is the Modal
+            <Col>
+              <Col>
+                <p>ProfileContext: </p>
+                {/* <p>Username: {profContext.userProf.username} </p> */}
+                <p>Username: {usernameUE} </p>
+              </Col>
+            </Col>
+          </Col>
+        </Row>
+      </Container>
+    </Modal>
   );
 }

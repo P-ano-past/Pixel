@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import ColorSel from "../ColorSel/ColorSel";
 import Grid from "../Grid/Grid";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
@@ -12,9 +12,13 @@ import UserModal from "../UserModal/UserModal";
 var qs = require("qs");
 
 export default function Main() {
-  const [userName, setUserName] = useState("");
   const userInfo = useContext(UserContext);
   const [profileState, setProfileState] = useState("");
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     getInfo();
@@ -69,7 +73,6 @@ export default function Main() {
           .then(function (response) {
             // console.log("response.data: ", response.data);
             setProfileState(response.data);
-            setUserName(response.data.username);
           })
           .catch(function (error) {
             console.log(error);
@@ -102,7 +105,11 @@ export default function Main() {
                       </h4>
                     </div>
                   </p>
-                  <UserModal />
+                  <Button variant="primary" onClick={handleShow}>
+                    Modal
+                  </Button>
+
+                  <UserModal show={show} onHide={handleClose} />
                 </Col>
                 <UserInfo />
               </Col>
