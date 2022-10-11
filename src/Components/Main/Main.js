@@ -5,20 +5,13 @@ import Grid from "../Grid/Grid";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 import { UserContext } from "../../Utils/UserContext/UserContext";
 import axios from "axios";
-import UserInfo from "../UserInfo/UserInfo";
 import "./Main.css";
 import Greeting from "../Greeting/Greeting";
-import UserModal from "../UserModal/UserModal";
 var qs = require("qs");
 
 export default function Main() {
   const userInfo = useContext(UserContext);
   const [profileState, setProfileState] = useState("");
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     getInfo();
@@ -105,13 +98,7 @@ export default function Main() {
                       </h4>
                     </div>
                   </p>
-                  <Button variant="primary" onClick={handleShow}>
-                    Modal
-                  </Button>
-
-                  <UserModal show={show} onHide={handleClose} />
                 </Col>
-                <UserInfo />
               </Col>
             </Row>
             <Row>

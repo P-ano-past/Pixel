@@ -4,14 +4,16 @@ import { Row, Col } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
+import { UserContext } from "../../Utils/UserContext/UserContext";
 
 export default function Cell() {
   const cellArr = [];
   const colorValue = useContext(ColorPickContext);
+  const profile = useContext(UserContext);
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Simple tooltip
+      User: {profile.userProf.username}
     </Tooltip>
   );
 
