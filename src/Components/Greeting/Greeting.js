@@ -1,5 +1,4 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import { UserContext } from "../../Utils/UserContext/UserContext";
 
 export default function Greeting() {

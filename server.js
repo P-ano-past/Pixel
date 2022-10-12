@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
+const routes = require("./server/routes/index");
 app.listen(PORT, function () {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
@@ -20,15 +20,17 @@ app.get("/ping", function (req, res) {
   return res.send("pong");
 });
 
+app.use(routes);
+
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@${process.env.DB_URL}?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@${process.env.DB_URL}?retryWrites=true`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
   )
-  .then(() => console.log("Loaded on: localhost:" + PORT))
+  .then(() => console.log("MongoDB loaded on: localhost:" + PORT))
   .catch((err) => console.log(err));
 
 app.get("/*", cors(), (req, res) => {

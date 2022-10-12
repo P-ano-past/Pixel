@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const blockRoutes = require("./blockRoutes");
-const publicRoutes = require("./publicRoutes");
+const gridRoutes = require("./gridRoutes");
 
 router.use("/block", blockRoutes);
-router.use("/public", publicRoutes);
+router.use("/grid", gridRoutes);
 
 module.exports = router;

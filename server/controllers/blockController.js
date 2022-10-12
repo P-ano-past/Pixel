@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../models/");
 
 module.exports = {
   findAll: function (req, res) {
@@ -19,7 +19,11 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   create: function ({ body }, res) {
-    db.Block.insertOne({ _id: body.block });
+    db.Block.create({
+      username: body.username,
+      discriminator: body.discriminator,
+    });
+    // console.log("body", body);
   },
   createPost: function ({ body }, res) {
     db.Block.findByIdAndUpdate(

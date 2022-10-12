@@ -1,19 +1,15 @@
 import { React, useState, useContext } from "react";
 import "./Cell.css";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
-import { UserContext } from "../../Utils/UserContext/UserContext";
-import e from "cors";
+import axios from "axios";
 
 export default function Cell() {
   const cellArr = [];
   const colorValue = useContext(ColorPickContext);
-  const profile = useContext(UserContext);
   const [cellID, setCellId] = useState();
-  const [username, setUsername] = useState(profile.userProf.username);
-  // const [, set] = useState();
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -50,5 +46,40 @@ export default function Cell() {
     );
   }
 
-  return <Row className="cellRow">{cellArr}</Row>;
+  return (
+    <Row className="cellRow">
+      <Button
+        onClick={() => {
+          axios
+            .get("/api/block/")
+            .then((res) => {
+              console.log("res", res);
+            })
+            .catch((error) => {
+              console.log("err", error);
+            });
+        }}
+      >
+        get Arr?
+      </Button>
+      <Button
+        onClick={() => {
+          axios
+            .post("/api/block/post/", {
+              username: "testUsername1",
+              discriminator: "525234662234",
+            })
+            .then((res) => {
+              console.log("res", res);
+            })
+            .catch((error) => {
+              console.log("err", error);
+            });
+        }}
+      >
+        Post Arr?
+      </Button>
+      {cellArr}
+    </Row>
+  );
 }

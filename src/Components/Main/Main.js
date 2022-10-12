@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ColorSel from "../ColorSel/ColorSel";
 import Grid from "../Grid/Grid";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
