@@ -1,19 +1,26 @@
-import { React, useContext } from "react";
+import { React, useState, useContext } from "react";
 import "./Cell.css";
 import { Row, Col } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 import { UserContext } from "../../Utils/UserContext/UserContext";
+import e from "cors";
 
 export default function Cell() {
   const cellArr = [];
   const colorValue = useContext(ColorPickContext);
   const profile = useContext(UserContext);
+  const [cellID, setCellId] = useState();
+  const [username, setUsername] = useState(profile.userProf.username);
+  // const [, set] = useState();
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      User: {profile.userProf.username}
+      <Row>
+        <Col>User: {colorValue.user}</Col>
+        <Col>id: {cellID}</Col>
+      </Row>
     </Tooltip>
   );
 
@@ -30,6 +37,9 @@ export default function Cell() {
       >
         <Col
           className={"cell " + i}
+          onMouseEnter={(e) => {
+            setCellId(e.target.id);
+          }}
           key={i}
           id={i}
           onClick={(e) => {
