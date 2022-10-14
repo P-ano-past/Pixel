@@ -46,6 +46,8 @@ export default function Cell() {
     );
   }
 
+  const sendToDB = () => {};
+
   return (
     <Row className="cellRow">
       <Button
@@ -53,6 +55,7 @@ export default function Cell() {
           axios
             .get("/api/block/")
             .then((res) => {
+              console.log("cellArr", cellArr);
               console.log("res", res);
             })
             .catch((error) => {

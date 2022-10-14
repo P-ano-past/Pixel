@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const { findAll, findByUser } = require("../../controllers/gridController");
+const { findAll, create } = require("../../controllers/gridController");
 
 router.route("/").get(findAll);
-router.route("/:id").get(findByUser);
+router.route("/post/").post(create);
 
 module.exports = router;
