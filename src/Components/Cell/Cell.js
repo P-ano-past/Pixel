@@ -8,6 +8,7 @@ import axios from "axios";
 
 export default function Cell() {
   const cellArr = [];
+  const iArr = [];
   const colorValue = useContext(ColorPickContext);
   const [cellID, setCellId] = useState();
 
@@ -25,6 +26,7 @@ export default function Cell() {
   };
 
   for (let i = 0; i < 5000; i++) {
+    iArr.push(i);
     cellArr.push(
       <OverlayTrigger
         placement="right"
@@ -53,7 +55,7 @@ export default function Cell() {
       <Button
         onClick={() => {
           axios
-            .get("/api/block/")
+            .get("/api/grid/")
             .then((res) => {
               console.log("cellArr", cellArr);
               console.log("res", res);
@@ -65,23 +67,7 @@ export default function Cell() {
       >
         get Arr?
       </Button>
-      <Button
-        onClick={() => {
-          axios
-            .post("/api/block/post/", {
-              username: "testUsername1",
-              discriminator: "525234662234",
-            })
-            .then((res) => {
-              console.log("res", res);
-            })
-            .catch((error) => {
-              console.log("err", error);
-            });
-        }}
-      >
-        Post Arr?
-      </Button>
+
       {cellArr}
     </Row>
   );

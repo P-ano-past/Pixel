@@ -9,9 +9,9 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   create: function ({ body }, res) {
-    // db.Grid.create({
-    //   cellId: body.id,
-    // });
-    console.log("body", body);
+    db.Grid.create({
+      cellID: body.iArr,
+    });
+    console.log("body.iArr", body.iArr);
   },
 };
