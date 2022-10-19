@@ -36,56 +36,37 @@ export default function Cell() {
   };
 
   const sendToDB = () => {
-    // axios
-    //   .post(`/api/grid/color/${dbID}`,{
-    //     cellID:
-    //   })
-    //   .then((res) => {
-    //     const getData = res.data[0].cellID[cellID];
-    //     const getData_id = res.data[0]._id;
-    //     console.log("res", res);
-    //     console.log("getData", getData);
-    //     console.log("getData_id", getData_id);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
     axios
       .get(`/api/grid/`)
       .then((res) => {
-        // console.log("getData", getData);
+        console.log("ID: ", res.data[0]._id);
         // console.log(
-        //   "res.data[0].cellID[cellID].pickedColor",
+        //   "res.data[0].cellID[0].cellID:",
+        //   res.data[0].cellID[cellID].cellID
+        // );
+        // console.log(
+        //   "res.data[0].cellID[0].pickedColor:",
         //   res.data[0].cellID[cellID].pickedColor
         // );
+        // console.log("colorValue.color", colorValue.color);
         // console.log(
-        //   "res.data[0].cellID[cellID].userCell",
-        //   res.data[0].cellID[cellID].userCell
+        //   "userProfile.userProf.username",
+        //   userProfile.userProf.username
         // );
 
+        console.log("res", res);
+
         axios
-          .post(`api/grid/color/${res.data[0]._id}`, {
-            cellID: cellID,
-            pickedColor: colorValue.color,
-            userCell: userProfile.userProf.username,
+          .post(`/api/grid/color/${res.data[0]._id}`, {
+            cellID: {
+              cellID: res.data[0].cellID[cellID].cellID,
+              pickedColor: colorValue.color,
+              userCell: userProfile.userProf.username,
+            },
           })
           .catch((err) => {
-            console.log(err);
+            console.log("ERROR!:", err);
           });
-        // axios}
-        //   .post(`/api/grid/color/${dbID}`, {
-        //     cellID: "",
-        //   })
-        //   .then((res) => {
-        //     const getData = res.data[0].cellID[cellID];
-        //     const getData_id = res.data[0]._id;
-        //     console.log("res", res);
-        //     console.log("getData", getData);
-        //     console.log("getData_id", getData_id);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
       })
       .catch((err) => console.log(err));
     // axios.post(() => {});
