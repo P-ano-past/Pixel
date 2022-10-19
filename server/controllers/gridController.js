@@ -10,17 +10,18 @@ module.exports = {
   },
   findById: function (req, res) {
     console.log("req", req);
-    console.log("res", res);
+    console.log("res.body", res.body);
     db.Grid.findOneAndUpdate(req.params.id)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
   update: function (req, res) {
-    console.log("req", req);
-    console.log("res", res);
-    db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
+    console.log("req.body", req.body);
+    //NEED TO FIND CELLID AND UPDATE FROM THERE.
+    // console.log("res.body", res.body);
+    // db.Grid.findOneAndUpdate({ _id: req.params.id }, req.body)
+    //   .then((dbModel) => res.json(dbModel))
+    //   .catch((err) => res.status(422).json(err));
   },
   create: function ({ body }, res) {
     db.Grid.create({
