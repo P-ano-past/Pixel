@@ -12,10 +12,21 @@ export default function Cell() {
   const iArr = [];
   const colorValue = useContext(ColorPickContext);
   const userProfile = useContext(UserContext);
-  const [cellID, setCellId] = useState();
+  const [cellIDState, setCellIdState] = useState();
   const [colorState, setColorState] = useState();
   const [usernameState, setUsernameState] = useState();
   const dbID = "6349e60165c62e5ca556bd47";
+
+  const createDB = () => {
+    axios
+      .post(`/api/grid/post`, { iArr })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -24,7 +35,7 @@ export default function Cell() {
           User:
           {/* {colorValue.user} */}
         </Col>
-        <Col>id: {cellID}</Col>
+        <Col>id: {cellIDState}</Col>
       </Row>
     </Tooltip>
   );
@@ -36,40 +47,43 @@ export default function Cell() {
   };
 
   const sendToDB = () => {
+    console.log("cellIDState", cellIDState);
+
     axios
       .get(`/api/grid/`)
       .then((res) => {
-        console.log("ID: ", res.data[0]._id);
-        // console.log(
-        //   "res.data[0].cellID[0].cellID:",
-        //   res.data[0].cellID[cellID].cellID
-        // );
-        // console.log(
-        //   "res.data[0].cellID[0].pickedColor:",
-        //   res.data[0].cellID[cellID].pickedColor
-        // );
-        // console.log("colorValue.color", colorValue.color);
-        // console.log(
-        //   "userProfile.userProf.username",
-        //   userProfile.userProf.username
-        // );
-
-        console.log("res", res);
-
+        console.log("res", res.data[cellIDState]._id);
         axios
-          .post(`/api/grid/color/${res.data[0]._id}`, {
-            cellID: {
-              cellID: res.data[0].cellID[cellID].cellID,
-              pickedColor: colorValue.color,
-              userCell: userProfile.userProf.username,
-            },
+          .post(`/api/grid/color/${res.data[cellIDState]._id}`, {
+            _id: res.data[cellIDState]._id,
+            pickedColor: colorValue.color,
+            userCell: userProfile.userProf.username,
+            cellID: cellIDState,
+          })
+          .then((res) => {
+            console.log("Axios get :id", res);
           })
           .catch((err) => {
-            console.log("ERROR!:", err);
+            console.log("err", err);
           });
+        // axios
+        //   .post(`/api/grid/color/${res.data[0]._id}`, {
+        //     _id: res.data[0]._id,
+        //     cellID: {
+        //       cellID: res.data[0].cellID[cellIDState].cellID,
+        //       pickedColor: colorValue.color,
+        //       userCell: userProfile.userProf.username,
+        //       _id: res.data[0].cellID[cellIDState]._id,
+        //     },
+        //   })
+        //   .then((res) => {
+        //     console.log("res", res);
+        //   })
+        //   .catch((err) => {
+        //     console.log("ERROR!:", err);
+        //   });
       })
       .catch((err) => console.log(err));
-    // axios.post(() => {});
   };
 
   for (let i = 0; i < 5000; i++) {
@@ -83,7 +97,7 @@ export default function Cell() {
         <Col
           className={"cell " + i}
           onMouseEnter={(e) => {
-            setCellId(e.target.id);
+            setCellIdState(e.target.id);
           }}
           key={i}
           id={i}
@@ -96,5 +110,16 @@ export default function Cell() {
     );
   }
 
-  return <Row className="cellRow">{cellArr}</Row>;
+  return (
+    <Row className="cellRow">
+      {cellArr}
+      <Button
+        onClick={(e) => {
+          createDB(e);
+        }}
+      >
+        CreateDB
+      </Button>
+    </Row>
+  );
 }
