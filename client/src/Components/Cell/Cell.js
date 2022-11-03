@@ -1,4 +1,4 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./Cell.css";
 import { Row, Col, Button } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -6,6 +6,9 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 import { UserContext } from "../../Utils/UserContext/UserContext";
 import axios from "axios";
+import { io } from "socket.io-client";
+
+const socket = io("localhost:3001");
 
 export default function Cell() {
   const cellArr = [];
@@ -13,20 +16,53 @@ export default function Cell() {
   const colorValue = useContext(ColorPickContext);
   const userProfile = useContext(UserContext);
   const [cellIDState, setCellIdState] = useState();
+  const [TTName, setTTName] = useState();
   const [colorState, setColorState] = useState();
   const [usernameState, setUsernameState] = useState();
-  const dbID = "6349e60165c62e5ca556bd47";
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [lastPong, setLastPong] = useState(null);
 
-  const createDB = () => {
-    axios
-      .post(`/api/grid/post`, { iArr })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  useEffect(() => {
+    socket.on("connect", () => {
+      setIsConnected(true);
+    });
+
+    socket.on("disconnect", () => {
+      setIsConnected(false);
+    });
+
+    socket.on("pong", () => {
+      setLastPong(new Date().toISOString());
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pong");
+    };
+  }, []);
+
+  const sendPing = () => {
+    socket.emit("ping");
   };
+
+  // const createDB = () => {
+  //   axios
+  //     .post(`/api/grid/post`, { iArr })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   //   <Button
+  //   //   onClick={(e) => {
+  //   //     createDB(e);
+  //   //   }}
+  //   // >
+  //   //   CreateDB
+  //   // </Button>
+  // };
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -52,7 +88,6 @@ export default function Cell() {
     axios
       .get(`/api/grid/`)
       .then((res) => {
-        console.log("res", res.data[cellIDState]._id);
         axios
           .post(`/api/grid/color/${res.data[cellIDState]._id}`, {
             _id: res.data[cellIDState]._id,
@@ -66,22 +101,6 @@ export default function Cell() {
           .catch((err) => {
             console.log("err", err);
           });
-        // axios
-        //   .post(`/api/grid/color/${res.data[0]._id}`, {
-        //     _id: res.data[0]._id,
-        //     cellID: {
-        //       cellID: res.data[0].cellID[cellIDState].cellID,
-        //       pickedColor: colorValue.color,
-        //       userCell: userProfile.userProf.username,
-        //       _id: res.data[0].cellID[cellIDState]._id,
-        //     },
-        //   })
-        //   .then((res) => {
-        //     console.log("res", res);
-        //   })
-        //   .catch((err) => {
-        //     console.log("ERROR!:", err);
-        //   });
       })
       .catch((err) => console.log(err));
   };
@@ -98,6 +117,13 @@ export default function Cell() {
           className={"cell " + i}
           onMouseEnter={(e) => {
             setCellIdState(e.target.id);
+            axios
+              .get(`/api/grid/`)
+              .then((res) => {
+                // console.log("res", res.data[cellIDState]._id);
+              })
+              .catch((err) => console.log(err));
+            //on mouseEnter, name should be set to whoever claimed this tile.
           }}
           key={i}
           id={i}
@@ -113,13 +139,15 @@ export default function Cell() {
   return (
     <Row className="cellRow">
       {cellArr}
-      <Button
-        onClick={(e) => {
-          createDB(e);
-        }}
-      >
-        CreateDB
-      </Button>
+      <Row>
+        <Col>
+          <div>
+            <p>Connected: {"" + isConnected}</p>
+            <p>Last pong: {lastPong || "-"}</p>
+            <button onClick={sendPing}>Send ping</button>
+          </div>
+        </Col>
+      </Row>
     </Row>
   );
 }
