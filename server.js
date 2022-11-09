@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(3001);
+// httpServer.listen(3000);
 app.listen(PORT, function () {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ limit: "200mb", extended: true }));
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3001" }));
+app.use(cors({ origin: `http://localhost:${PORT} ` }));
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, "build")));
 app.get("/ping", function (req, res) {

@@ -9,11 +9,10 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findById: function (req, res) {
-    console.log("req.body", req.body);
-    // console.log("res.body", res.body);
-    // db.Grid.findOne(req.params.id)
-    //   .then((dbModel) => res.json(dbModel))
-    //   .catch((err) => res.status(422).json(err));
+    // console.log("req.params.id", req.params.id);
+    db.Grid.findOne({ cellId: req.params.id })
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(500).json(err));
   },
   update: function (req, res) {
     db.Grid.findOneAndUpdate({ _id: req.params.id }, req.body)

@@ -117,19 +117,20 @@ export default function Cell() {
           className={"cell " + i}
           onMouseEnter={(e) => {
             setCellIdState(e.target.id);
-            axios
-              .get(`/api/grid/`)
-              .then((res) => {
-                // console.log("res", res.data[cellIDState]._id);
-              })
-              .catch((err) => console.log(err));
-            //on mouseEnter, name should be set to whoever claimed this tile.
           }}
           key={i}
           id={i}
           onClick={(e) => {
             colorPick(e);
-            sendToDB();
+            // console.log("cellIsState: ", cellIDState);
+            axios
+              .get(`/api/grid/color/${cellIDState}`)
+              .then((res) => {
+                // console.log("res", res.data[cellIDState]._id);
+                console.log("res.data: ", res.data);
+              })
+              .catch((err) => console.log(err));
+            // sendToDB();
           }}
         />
       </OverlayTrigger>

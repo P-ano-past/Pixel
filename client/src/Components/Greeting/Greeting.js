@@ -22,7 +22,7 @@ export default function Greeting() {
   useEffect(() => {
     const random = Math.floor(Math.random() * phrases.length);
     setGreetingPhrase(phrases[random]);
-  });
+  }, [phrases]);
 
   return (
     <div
