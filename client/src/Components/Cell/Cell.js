@@ -6,9 +6,6 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { ColorPickContext } from "../../Utils/ColorPickContext/ColorPickContext";
 import { UserContext } from "../../Utils/UserContext/UserContext";
 import axios from "axios";
-import { io } from "socket.io-client";
-
-const socket = io("localhost:3001");
 
 export default function Cell() {
   const cellArr = [];
@@ -16,53 +13,8 @@ export default function Cell() {
   const colorValue = useContext(ColorPickContext);
   const userProfile = useContext(UserContext);
   const [cellIDState, setCellIdState] = useState();
-  const [TTName, setTTName] = useState();
   const [colorState, setColorState] = useState();
   const [usernameState, setUsernameState] = useState();
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [lastPong, setLastPong] = useState(null);
-
-  useEffect(() => {
-    socket.on("connect", () => {
-      setIsConnected(true);
-    });
-
-    socket.on("disconnect", () => {
-      setIsConnected(false);
-    });
-
-    socket.on("pong", () => {
-      setLastPong(new Date().toISOString());
-    });
-
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pong");
-    };
-  }, []);
-
-  const sendPing = () => {
-    socket.emit("ping");
-  };
-
-  // const createDB = () => {
-  //   axios
-  //     .post(`/api/grid/post`, { iArr })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  //   //   <Button
-  //   //   onClick={(e) => {
-  //   //     createDB(e);
-  //   //   }}
-  //   // >
-  //   //   CreateDB
-  //   // </Button>
-  // };
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -122,15 +74,12 @@ export default function Cell() {
           id={i}
           onClick={(e) => {
             colorPick(e);
-            // console.log("cellIsState: ", cellIDState);
             axios
               .get(`/api/grid/color/${cellIDState}`)
               .then((res) => {
-                // console.log("res", res.data[cellIDState]._id);
                 console.log("res.data: ", res.data);
               })
               .catch((err) => console.log(err));
-            // sendToDB();
           }}
         />
       </OverlayTrigger>
@@ -139,16 +88,21 @@ export default function Cell() {
 
   return (
     <Row className="cellRow">
+      {/* <Button
+      onClick={() => {
+        axios
+          .post(`/api/grid/post`, { iArr })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }}
+    >
+      CreateDB
+    </Button>; */}
       {cellArr}
-      <Row>
-        <Col>
-          <div>
-            <p>Connected: {"" + isConnected}</p>
-            <p>Last pong: {lastPong || "-"}</p>
-            <button onClick={sendPing}>Send ping</button>
-          </div>
-        </Col>
-      </Row>
     </Row>
   );
 }

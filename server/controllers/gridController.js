@@ -10,8 +10,14 @@ module.exports = {
   },
   findById: function (req, res) {
     // console.log("req.params.id", req.params.id);
-    db.Grid.findOne({ cellId: req.params.id })
-      .then((dbModel) => res.json(dbModel))
+    db.Grid.findOne({
+      // _id: "",
+      cellID: req.params.id,
+    })
+      .then((dbModel) => {
+        console.log(dbModel);
+        res.json(dbModel);
+      })
       .catch((err) => res.status(500).json(err));
   },
   update: function (req, res) {
